@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.foodrecipes.databinding.FragmentRecipesBinding
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class RecipesFragment : Fragment()
 {
     lateinit var binding :FragmentRecipesBinding
@@ -16,7 +18,6 @@ class RecipesFragment : Fragment()
     {
         binding = FragmentRecipesBinding.inflate(inflater,container,false)
 
-        binding.recyclerViewRecipesFragment.showShimmer()
 
         return binding.root
     }

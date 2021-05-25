@@ -9,20 +9,17 @@
     <com.todkars.shimmer.ShimmerRecyclerView
         android:id="@+id/recyclerViewRecipesFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        app:shimmer_recycler_layout="@layout/layout_place_holder_for_items"
-        app:shimmer_recycler_item_count="5"
-        />
+
+    />
+
     <ImageView
         android:id="@+id/imageViewNoInternet"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:src="@drawable/ic_sad_emoji"
         android:alpha="0.5"
-        android:visibility="gone"
         android:layout_centerInParent="true"
         android:contentDescription="TODO" />
 
@@ -38,20 +35,18 @@
         android:text="@string/no_internet_connection"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:visibility="gone" />
-
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_restaurant"
-            app:tint="@color/white"
-            android:backgroundTint="@color/colorAccent"
-            android:focusable="true"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="24dp"
-            android:layout_marginEnd="24dp"
-            />
+        />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_restaurant"
+        app:tint="@color/white"
+        android:backgroundTint="@color/colorAccent"
+        android:focusable="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="24dp"
+        />
 
 </RelativeLayout>
