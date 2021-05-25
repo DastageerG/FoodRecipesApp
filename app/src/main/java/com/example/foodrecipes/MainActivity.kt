@@ -28,7 +28,11 @@ class MainActivity : AppCompatActivity()
                         ,R.id.foodJokeFragment
                 ))
 
-        binding?.bottomNavigationView.setupWithNavController(navController)
+        binding.bottomNavigationView.setupWithNavController(navController)
+        binding.bottomNavigationView.setOnItemReselectedListener ()
+        {
+
+        }
         setupActionBarWithNavController(navController,appBarConfiguration)
 
     } // onCreate closed
