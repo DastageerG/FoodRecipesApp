@@ -1,12 +1,9 @@
 package com.example.foodrecipes.viewmodel
 
 import android.app.Application
-import android.content.ContentQueryMap
 import android.content.Context
 import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import android.net.NetworkCapabilities.*
-import android.net.NetworkRequest
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -16,7 +13,6 @@ import com.example.foodrecipes.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
-import java.io.IOException
 import java.lang.Exception
 import javax.inject.Inject
 
@@ -56,9 +52,9 @@ class MainViewModel @Inject constructor(private val repository: Repository,appli
         return when
         {
             response.message().toString().contains("timeout") ->  NetworkResult.Error("Time Out.")
-            response.code() == 402 -> NetworkResult.Error("APi Key Limited.")
-            response.body()!!.results.isNullOrEmpty() -> NetworkResult.Error("Recipes Not Fount.")
-            response.isSuccessful -> NetworkResult.Success(response.body()!!)
+            response.code() == 402                          -> NetworkResult.Error("APi Key Limited.")
+            response.body()!!.recipeResults.isNullOrEmpty() -> NetworkResult.Error("Recipes Not Fount.")
+            response.isSuccessful                           -> NetworkResult.Success(response.body()!!)
             else -> NetworkResult.Error(response.message().toString())
         } // return when closed
     }

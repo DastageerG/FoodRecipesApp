@@ -28,8 +28,7 @@
             <ImageView
                 android:id="@+id/imageViewRecipesItemsRow"
                 android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                tools:srcCompat="@tools:sample/avatars"
+                android:layout_height="180dp"
                 android:scaleType="centerCrop"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
