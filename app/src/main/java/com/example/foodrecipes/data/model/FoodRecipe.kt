@@ -2,7 +2,8 @@ package com.example.foodrecipes.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class FoodRecipe(
+data class FoodRecipe
+(
     @SerializedName("results")
     val recipeResults: List<RecipeResult>
 )

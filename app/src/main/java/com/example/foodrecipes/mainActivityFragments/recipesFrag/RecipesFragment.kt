@@ -15,8 +15,10 @@ import com.example.foodrecipes.databinding.FragmentRecipesBinding
 import com.example.foodrecipes.utils.Constants.API_KEY
 import com.example.foodrecipes.utils.Constants.TAG
 import com.example.foodrecipes.utils.NetworkResult
+import com.example.foodrecipes.utils.observeOnce
 import com.example.foodrecipes.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -33,13 +35,46 @@ class RecipesFragment : Fragment()
         binding = FragmentRecipesBinding.inflate(inflater,container,false)
 
         setupRecyclerView()
-        requestApiData()
+        readDatabase()
 
         return binding.root
-    }
+
+    } // onCreate closed
+
+    private fun setupRecyclerView()
+    {
+        binding.apply()
+        {
+            recyclerViewRecipesFragment.adapter = recipesAdapter
+            recyclerViewRecipesFragment.layoutManager = LinearLayoutManager(requireContext())
+        }
+        showShimmerEffect()
+    } // setupRecyclerView closed
+
+    private fun readDatabase()
+    {
+        lifecycleScope.launch()
+        {
+            mainViewModel.readRecipes.observeOnce(viewLifecycleOwner)
+            {
+
+                if(it.isNotEmpty())
+                {
+                    Log.d(TAG, "readDatabase: read database")
+                    recipesAdapter.submitList(it[0].foodRecipe.recipeResults)
+                    hideShimmerEffect()
+                } // if closed
+                else
+                {
+                    requestApiData()
+                } // else closed
+            } // observer closed
+        } // coroutine closed
+    } // readDatabase closed
 
     private fun requestApiData()
     {
+        Log.d(TAG, "requestApiData: request api")
             mainViewModel.getRecipes(appLyQueries())
             mainViewModel.recipesResponse.observe(viewLifecycleOwner)
             {
@@ -49,6 +84,7 @@ class RecipesFragment : Fragment()
                    is NetworkResult.Success ->
                    {
                         hideShimmerEffect()
+                        hideNoInternetViews()
                        response.data?.recipeResults?.let ()
                        {
                            recipesAdapter.submitList(it)
@@ -57,15 +93,28 @@ class RecipesFragment : Fragment()
                     is NetworkResult.Error ->
                     {
                         hideShimmerEffect()
+                        displayNoInternetViews()
+                        loadFromCache()
                         Log.d(TAG, "requestApiData: "+response.message)
                     }
                     is NetworkResult.Loading ->
                     {
+                        hideNoInternetViews()
                         showShimmerEffect()
                     }
                 } // when closed
             }
     } // requestApiData closed
+
+    private  fun showShimmerEffect()
+    {
+        binding.recyclerViewRecipesFragment.showShimmer()
+    } // showShimmerEffect closed
+
+    private fun hideShimmerEffect()
+    {
+        binding.recyclerViewRecipesFragment.hideShimmer()
+    } // hideShimmer closed
 
     private fun appLyQueries(): HashMap<String, String>
     {
@@ -81,31 +130,48 @@ class RecipesFragment : Fragment()
 
     } // applyQueries closed
 
-    private fun setupRecyclerView()
+
+    private fun loadFromCache()
     {
-        binding.apply()
+        lifecycleScope.launch()
         {
-            recyclerViewRecipesFragment.adapter = recipesAdapter
-            recyclerViewRecipesFragment.layoutManager = LinearLayoutManager(requireContext())
-        }
-        showShimmerEffect()
-    } // setupRecyclerView closed
+            mainViewModel.readRecipes.observe(viewLifecycleOwner)
+            {
+                if(it.isNotEmpty())
+                {
+                    recipesAdapter.submitList(it[0].foodRecipe.recipeResults)
+                } // if closed
+                else
+                {
+                    displayNoInternetViews()
+                }
+            } // observer closed
+        } // coroutine closed
+    } // readDatabase closed
 
-    private  fun showShimmerEffect()
-    {
-        binding.recyclerViewRecipesFragment.showShimmer()
-    } // showShimmerEffect closed
 
-    private fun hideShimmerEffect()
-    {
-        binding.recyclerViewRecipesFragment.hideShimmer()
-    } // hideShimmer closed
 
     override fun onDestroyView()
     {
         super.onDestroyView()
        binding == null
-    }
+    } // destroyView closed
+
+    /** ImageView and TexView specifies There is no internet or Something is wrong are invisible by default  */
+    //   make them visibile
+    fun displayNoInternetViews()
+    {
+        binding.imageViewNoInternet.visibility = View.VISIBLE
+        binding.textVieWNoInternetConnection.visibility = View.VISIBLE
+    } // displayNoInternetViews
+
+    // make them invisible
+    fun hideNoInternetViews()
+    {
+        binding.imageViewNoInternet.visibility = View.GONE
+        binding.textVieWNoInternetConnection.visibility = View.GONE
+    } // hideNoInternetViews
 
 
-}
+
+} // RecipeFragment class closed

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.request.ImageRequest
+import com.example.foodrecipes.R
 import com.example.foodrecipes.data.model.RecipeResult
 import com.example.foodrecipes.databinding.LayoutRecipesItemsRowBinding
 
@@ -53,6 +54,7 @@ class RecipesAdapter : ListAdapter<RecipeResult,RecipesAdapter.ViewHolder>(
                     .load(recipe.image)
                     {
                         crossfade(300)
+                        placeholder(R.drawable.ic_place_holder_image)
                     }
 
 
