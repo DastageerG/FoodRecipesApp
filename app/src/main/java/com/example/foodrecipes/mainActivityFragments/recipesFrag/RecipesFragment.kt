@@ -9,7 +9,11 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavArgs
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.foodrecipes.R
 import com.example.foodrecipes.adapter.RecipesAdapter
 import com.example.foodrecipes.databinding.FragmentRecipesBinding
 import com.example.foodrecipes.utils.Constants.API_KEY
@@ -17,16 +21,20 @@ import com.example.foodrecipes.utils.Constants.TAG
 import com.example.foodrecipes.utils.NetworkResult
 import com.example.foodrecipes.utils.observeOnce
 import com.example.foodrecipes.viewmodel.MainViewModel
+import com.example.foodrecipes.viewmodel.RecipesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import com.example.foodrecipes.mainActivityFragments.recipesFrag.RecipesFragmentArgs as RecipesFragmentArgs
 
 
 @AndroidEntryPoint
 class RecipesFragment : Fragment()
 {
-    lateinit var binding :FragmentRecipesBinding
+    lateinit var binding : FragmentRecipesBinding
     private val  mainViewModel:MainViewModel by viewModels()
+    private val  recipeViewModel:RecipesViewModel by viewModels()
     private val recipesAdapter by lazy {RecipesAdapter()}
+    private val args by navArgs<RecipesFragmentArgs>()
 
 
 
@@ -36,6 +44,13 @@ class RecipesFragment : Fragment()
 
         setupRecyclerView()
         readDatabase()
+
+
+        // button for categories
+        binding.fabCategories.setOnClickListener()
+        {
+            findNavController().navigate(R.id.action_recipesFragment_to_bottomSheetDialog)
+        }
 
         return binding.root
 
@@ -58,7 +73,7 @@ class RecipesFragment : Fragment()
             mainViewModel.readRecipes.observeOnce(viewLifecycleOwner)
             {
 
-                if(it.isNotEmpty())
+                if(it.isNotEmpty() && !args.backFromBottomSheet)
                 {
                     Log.d(TAG, "readDatabase: read database")
                     recipesAdapter.submitList(it[0].foodRecipe.recipeResults)
@@ -75,7 +90,7 @@ class RecipesFragment : Fragment()
     private fun requestApiData()
     {
         Log.d(TAG, "requestApiData: request api")
-            mainViewModel.getRecipes(appLyQueries())
+            mainViewModel.getRecipes(recipeViewModel.appLyQueries())
             mainViewModel.recipesResponse.observe(viewLifecycleOwner)
             {
                 response ->
@@ -93,7 +108,8 @@ class RecipesFragment : Fragment()
                     is NetworkResult.Error ->
                     {
                         hideShimmerEffect()
-                        displayNoInternetViews()
+                    ///    displayNoInternetViews()
+                        Toast.makeText(requireContext(),"No Internet Connection",Toast.LENGTH_SHORT).show()
                         loadFromCache()
                         Log.d(TAG, "requestApiData: "+response.message)
                     }
@@ -116,19 +132,7 @@ class RecipesFragment : Fragment()
         binding.recyclerViewRecipesFragment.hideShimmer()
     } // hideShimmer closed
 
-    private fun appLyQueries(): HashMap<String, String>
-    {
-        val queries:HashMap<String,String> = HashMap()
 
-        queries["number"] = "50"
-        queries["apiKey"] = API_KEY
-        queries["type"] = "snack"
-        queries["diet"] = "vegan"
-        queries["addRecipeInformation"] = "true"
-        queries["fillIngredients"] = "true"
-        return  queries
-
-    } // applyQueries closed
 
 
     private fun loadFromCache()
