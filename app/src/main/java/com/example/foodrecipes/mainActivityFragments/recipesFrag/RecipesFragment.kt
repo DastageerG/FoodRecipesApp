@@ -223,12 +223,6 @@ class RecipesFragment : Fragment() , androidx.appcompat.widget.SearchView.OnQuer
 
 
 
-    override fun onDestroyView()
-    {
-        super.onDestroyView()
-       binding == null
-    } // destroyView closed
-
     /** ImageView and TexView specifies There is no internet or Something is wrong are invisible by default  */
     //   make them visibile
     fun displayNoInternetViews()
