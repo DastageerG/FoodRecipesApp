@@ -1,15 +1,10 @@
 package com.example.foodrecipes.viewmodel
 
 import android.app.Application
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities.*
-import androidx.datastore.preferences.edit
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.*
 import com.example.foodrecipes.data.dataStorePrefs.DataStoreRepository
-import com.example.foodrecipes.data.database.offlineCaching.RecipeEntity
-import com.example.foodrecipes.data.model.FoodRecipe
-import com.example.foodrecipes.data.repository.Repository
 import com.example.foodrecipes.utils.Constants
 import com.example.foodrecipes.utils.Constants.DEFAULT_DIET_TYPE
 import com.example.foodrecipes.utils.Constants.DEFAULT_MEAL_TYPE
@@ -20,29 +15,37 @@ import com.example.foodrecipes.utils.Constants.QUERY_DIET
 import com.example.foodrecipes.utils.Constants.QUERY_FILL_INGREDIENTS
 import com.example.foodrecipes.utils.Constants.QUERY_NUMBER
 import com.example.foodrecipes.utils.Constants.QUERY_TYPE
-import com.example.foodrecipes.utils.NetworkResult
+import com.example.foodrecipes.utils.Constants.TAG
+import com.example.foodrecipes.utils.NetworkListener
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import okhttp3.Dispatcher
-import retrofit2.Response
-import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
-class RecipesViewModel @Inject constructor(
+@ExperimentalCoroutinesApi
+class RecipesViewModel
+@Inject constructor(
     application: Application,
-    private val dataStoreRepository: DataStoreRepository)
+    private val dataStoreRepository: DataStoreRepository,
+   )
     : AndroidViewModel(application)
 {
-
 
     private var mealType = DEFAULT_MEAL_TYPE
     private var dietType = DEFAULT_DIET_TYPE
 
+
+    var networkStatus = false
+    var backOnline  = false
+
     val readMealAndDietType = dataStoreRepository.readMealAndDietType
+
+    val readBackOnline = dataStoreRepository.getBackOnlineStatus().asLiveData()
+
 
      fun saveMealAndDietTypes(mealType:String, mealId:Int, dietType:String, dietId:Int)
     {
@@ -51,6 +54,17 @@ class RecipesViewModel @Inject constructor(
             dataStoreRepository.saveMealAndDietTypes(mealType,mealId,dietType,dietId)
         }
     } // saveMealAndDietTypes closed
+
+    fun saveBackOnline(backOnline:Boolean)
+    {
+        viewModelScope.launch (Dispatchers.IO)
+        {
+            dataStoreRepository.saveBackOnline(backOnline)
+        }
+    } // saveBackOnline  closed
+
+
+
 
 
     fun appLyQueries(): HashMap<String, String>
@@ -75,6 +89,29 @@ class RecipesViewModel @Inject constructor(
         return  queries
 
     } // applyQueries closed
+
+
+
+    fun showNetWorkStatus()
+    {
+        if(!networkStatus)
+        {
+            Toast.makeText(getApplication(),"No Internet Connection",Toast.LENGTH_SHORT).show()
+
+            saveBackOnline(true)
+        } // if closed
+        else if (networkStatus)
+        {
+            Log.d(TAG, "showNetWorkStatus: "+networkStatus)
+            if(backOnline)
+            {
+                Toast.makeText(getApplication(),"We Are Back Online",Toast.LENGTH_SHORT).show()
+                saveBackOnline(false)
+            } // if closed
+        } // else if closed
+    } // networkStatus closed
+
+
 
 
 } // MainViewModel closed

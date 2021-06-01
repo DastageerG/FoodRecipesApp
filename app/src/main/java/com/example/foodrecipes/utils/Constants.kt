@@ -29,5 +29,7 @@ object Constants
         const val PREF_KEY_DIET_TYPE = "dietType"
         const val PREF_KEY_DIET_TYPE_ID = "dietTypeId"
 
+        // recipes viewModel
+        const val BACK_ONLINE  = "backOnline"
 
 } // Constants
