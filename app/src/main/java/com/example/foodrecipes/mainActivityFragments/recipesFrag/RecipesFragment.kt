@@ -2,9 +2,7 @@ package com.example.foodrecipes.mainActivityFragments.recipesFrag
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -21,23 +19,21 @@ import com.example.foodrecipes.utils.NetworkResult
 import com.example.foodrecipes.utils.observeOnce
 import com.example.foodrecipes.viewmodel.MainViewModel
 import com.example.foodrecipes.viewmodel.RecipesViewModel
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import kotlin.math.log
 import com.example.foodrecipes.mainActivityFragments.recipesFrag.RecipesFragmentArgs as RecipesFragmentArgs
 
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class RecipesFragment : Fragment()
+class RecipesFragment : Fragment() , androidx.appcompat.widget.SearchView.OnQueryTextListener
 {
     lateinit var binding : FragmentRecipesBinding
     private val  mainViewModel:MainViewModel by viewModels()
     private val  recipeViewModel:RecipesViewModel by viewModels()
-    private val recipesAdapter by lazy {RecipesAdapter()}
+    private val recipesAdapter  =  RecipesAdapter()
     private val args by navArgs<RecipesFragmentArgs>()
     private lateinit var networkListener: NetworkListener
 
@@ -46,7 +42,7 @@ class RecipesFragment : Fragment()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
         binding = FragmentRecipesBinding.inflate(inflater,container,false)
-
+        setHasOptionsMenu(true)
         setupRecyclerView()
 
         recipeViewModel.readBackOnline.observe(viewLifecycleOwner)
@@ -64,8 +60,8 @@ class RecipesFragment : Fragment()
                 recipeViewModel.showNetWorkStatus()
                 Log.d(TAG, "onCreateView: network status "+status)
                 readDatabase()
-            }
-        }
+            } // status
+        } /// lifeCycleScope
 
 
         // button for categories
@@ -153,6 +149,47 @@ class RecipesFragment : Fragment()
             }
     } // requestApiData closed
 
+    fun searchApiData(query: String)
+    {
+        showShimmerEffect()
+
+        mainViewModel.searchRecipes(recipeViewModel.applySearchQueries(query))
+
+        mainViewModel.searchRecipesResponse.observe(viewLifecycleOwner)
+        {response ->
+            when(response)
+            {
+
+
+                is NetworkResult.Success ->
+                {
+
+                    response.data?.recipeResults?.
+                    let ()
+                    {
+                        recipesAdapter.submitList(it)
+                    }
+                    hideShimmerEffect()
+                } // success closed
+                is NetworkResult.Error ->
+                {
+                    hideShimmerEffect()
+                    Toast.makeText(requireContext(),response.message,Toast.LENGTH_SHORT).show()
+                    loadFromCache()
+                }
+                is NetworkResult.Loading->
+                {
+                    showShimmerEffect()
+                }
+            } // when closed
+        } // observer closed
+
+
+    }// searchApi data closed
+
+
+
+
     private  fun showShimmerEffect()
     {
         binding.recyclerViewRecipesFragment.showShimmer()
@@ -207,6 +244,33 @@ class RecipesFragment : Fragment()
         binding.textVieWNoInternetConnection.visibility = View.GONE
     } // hideNoInternetViews
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater)
+    {
+        super.onCreateOptionsMenu(menu, inflater)
+
+        inflater.inflate(R.menu.recipe_frag_search_menu,menu)
+
+        val menuItem = menu.findItem(R.id.menuSearch)
+        val searchView = menuItem.actionView  as? androidx.appcompat.widget.SearchView
+
+        searchView?.isSubmitButtonEnabled = true
+        searchView?.setOnQueryTextListener(this)
+
+    } // onCreate option menu closed
+
+    override fun onQueryTextSubmit(query: String?): Boolean
+    {
+        if(query!=null)
+        {
+            searchApiData(query)
+        }
+        return true
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean
+    {
+        return true
+    }
 
 
 } // RecipeFragment class closed

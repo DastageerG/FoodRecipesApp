@@ -64,6 +64,23 @@ class RecipesViewModel
     } // saveBackOnline  closed
 
 
+    fun applySearchQueries(searchQuery:String): HashMap<String, String>
+    {
+
+
+
+        val queries:HashMap<String,String> = HashMap()
+        queries[QUERY_NUMBER] = DEFAULT_RECIPES_NUMBER
+        queries[QUERY_API_KEY] = Constants.API_KEY
+        queries[Constants.SEARCH_QUERY] = searchQuery
+        queries[QUERY_ADD_RECIPE_INFORMATION] = "true"
+        queries[QUERY_FILL_INGREDIENTS] = "true"
+        return  queries
+
+    } // applyQueries closed
+
+
+
 
 
 

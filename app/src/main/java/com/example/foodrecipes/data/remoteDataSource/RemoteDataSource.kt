@@ -11,4 +11,11 @@ class RemoteDataSource @Inject constructor(private val api: RecipesApi)
     {
         return api.getRecipes(queryMap)
     } // getRecipes closed
+
+    suspend fun searchRecipes(searchQueryMap:HashMap<String,String>) : Response<FoodRecipe>
+    {
+        return api.searchRecipes(searchQueryMap)
+    } // getRecipes closed
+
+
 }
