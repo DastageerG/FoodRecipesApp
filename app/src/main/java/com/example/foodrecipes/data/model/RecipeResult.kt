@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 import java.io.Serializable
 
-
+@Parcelize
 data class RecipeResult(
     @SerializedName("aggregateLikes")
     val aggregateLikes: Int,
@@ -37,4 +37,4 @@ data class RecipeResult(
     val vegetarian: Boolean,
     @SerializedName("veryHealthy")
     val veryHealthy: Boolean,
-) : Serializable
+) :  Parcelable

@@ -12,7 +12,8 @@ import com.example.foodrecipes.R
 import com.example.foodrecipes.data.model.RecipeResult
 import com.example.foodrecipes.databinding.LayoutRecipesItemsRowBinding
 
-class RecipesAdapter : ListAdapter<RecipeResult,RecipesAdapter.ViewHolder>(
+class RecipesAdapter : ListAdapter<RecipeResult,RecipesAdapter.ViewHolder>
+(
 
         object : DiffUtil.ItemCallback<RecipeResult>()
         {
@@ -28,6 +29,10 @@ class RecipesAdapter : ListAdapter<RecipeResult,RecipesAdapter.ViewHolder>(
         }
 )
 {
+
+
+
+
     inner class  ViewHolder(view: LayoutRecipesItemsRowBinding) : RecyclerView.ViewHolder(view.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
@@ -39,9 +44,10 @@ class RecipesAdapter : ListAdapter<RecipeResult,RecipesAdapter.ViewHolder>(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int)
     {
+        val recipe = getItem(position)
         LayoutRecipesItemsRowBinding.bind(holder.itemView).apply()
         {
-            val recipe = getItem(position)
+
 
             textViewLayoutItemsRowName.text = recipe.title
             textViewLayoutItemsRowDescription.text = recipe.summary
@@ -67,9 +73,33 @@ class RecipesAdapter : ListAdapter<RecipeResult,RecipesAdapter.ViewHolder>(
                 }
             }
 
+
+
         } // binding closed
 
 
+        holder.itemView.setOnClickListener()
+        {
+
+            onItemClickListener?.let { it(recipe) }
+        }
+
     } // onBindViewHolder closed
+
+
+    private var onItemClickListener : ((RecipeResult) -> Unit)? = null
+
+
+    fun setOnCLickListener(listener: (RecipeResult)->Unit)
+    {
+        onItemClickListener = listener
+    }
+
+
+
+
+
+
+
 
 } // RecipesAdapter closed

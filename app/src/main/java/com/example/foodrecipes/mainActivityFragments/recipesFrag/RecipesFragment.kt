@@ -45,6 +45,7 @@ class RecipesFragment : Fragment() , androidx.appcompat.widget.SearchView.OnQuer
         setHasOptionsMenu(true)
         setupRecyclerView()
 
+
         recipeViewModel.readBackOnline.observe(viewLifecycleOwner)
         {
             recipeViewModel.backOnline = it
@@ -77,8 +78,14 @@ class RecipesFragment : Fragment() , androidx.appcompat.widget.SearchView.OnQuer
             }
         } // clickListener closed
 
-        return binding.root
+        recipesAdapter.setOnCLickListener ()
+        {
+            val action = RecipesFragmentDirections.actionRecipesFragmentToDetailsActivity(it)
+            findNavController().navigate(action)
+        }
 
+
+        return binding.root
     } // onCreate closed
 
 

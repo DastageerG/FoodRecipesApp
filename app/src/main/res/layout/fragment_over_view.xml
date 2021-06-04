@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".detailsActivityFragments.overviewFrag.OverviewFragment">
+
+    <ImageView
+        android:id="@+id/imageViewOverViewFragmentRecipeImage"
+        android:layout_width="match_parent"
+        android:scaleType="centerCrop"
+        android:layout_height="260dp"
+        android:src="@color/green"
+        />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_shadow"
+            android:layout_alignBottom="@id/imageViewOverViewFragmentRecipeImage"
+            />
+
+    <ImageView
+        android:id="@+id/imageViewOverViewFragmentRecipeLikes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@id/imageViewOverViewFragmentRecipeImage"
+        android:layout_alignBottom="@id/imageViewOverViewFragmentRecipeImage"
+        android:layout_marginEnd="90dp"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/ic_heart_24"
+        app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/textViewOverViewFragmentLikes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@id/imageViewOverViewFragmentRecipeImage"
+        android:layout_alignBottom="@id/imageViewOverViewFragmentRecipeImage"
+        android:layout_marginEnd="85dp"
+        android:layout_marginBottom="10dp"
+        android:text="2345"
+        android:textColor="@color/white" />
+
+    <ImageView
+        android:id="@+id/imageViewOverViewFragmentRecipeTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@id/imageViewOverViewFragmentRecipeImage"
+        android:layout_alignBottom="@id/imageViewOverViewFragmentRecipeImage"
+        android:layout_marginEnd="35dp"
+        android:layout_marginBottom="29dp"
+        android:src="@drawable/ic_baseline_access_time_24"
+        app:tint="@color/white" />
+
+
+    <TextView
+        android:id="@+id/textViewOverViewFragmentTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@id/imageViewOverViewFragmentRecipeImage"
+        android:layout_alignBottom="@id/imageViewOverViewFragmentRecipeImage"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="10dp"
+        android:text="2345"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/textViewOverViewFragmentTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title"
+        android:layout_below="@id/imageViewOverViewFragmentRecipeImage"
+        android:textSize="28sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="serif-monospace"
+        />
+
+    <ImageView
+        android:id="@+id/imageViewCheckVegetarian"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewOverViewFragmentTitle"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:src="@drawable/ic_baseline_check_circle_24" />
+
+    <TextView
+        android:id="@+id/textViewCheckVegetarian"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewOverViewFragmentTitle"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@id/imageViewCheckVegetarian"
+        android:text="@string/vegetarian"
+        android:textColor="@color/darkGray" />
+
+    <ImageView
+        android:id="@+id/imageViewCheckGlutenFree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_check_circle_24"
+        android:layout_below="@id/textViewOverViewFragmentTitle"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="16dp"
+        android:layout_toEndOf="@id/textViewCheckVegetarian"
+        />
+
+    <TextView
+        android:id="@+id/textViewCheckGlutenFree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewOverViewFragmentTitle"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@id/imageViewCheckGlutenFree"
+        android:text="@string/gluten_free"
+        android:textColor="@color/darkGray" />
+
+
+    <ImageView
+        android:id="@+id/imageViewCheckHealthy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_check_circle_24"
+        android:layout_below="@id/textViewOverViewFragmentTitle"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="16dp"
+        android:layout_toEndOf="@id/textViewCheckGlutenFree"
+        />
+
+    <TextView
+        android:id="@+id/textViewCheckHealthy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewOverViewFragmentTitle"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@id/imageViewCheckHealthy"
+        android:text="@string/healthy"
+        android:textColor="@color/darkGray" />
+
+
+
+    <ImageView
+        android:id="@+id/imageViewCheckVegan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_check_circle_24"
+        android:layout_below="@id/imageViewCheckVegetarian"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="24dp"
+        />
+
+    <TextView
+        android:id="@+id/textViewCheckVegan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageViewCheckVegetarian"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/vegan"
+        android:textColor="@color/darkGray"
+        android:layout_toEndOf="@id/imageViewCheckVegan"
+        />
+
+
+    <ImageView
+        android:id="@+id/imageViewCheckDiaryFree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageViewCheckGlutenFree"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="12dp"
+        android:layout_toEndOf="@id/textViewCheckVegan"
+        android:src="@drawable/ic_baseline_check_circle_24" />
+
+    <TextView
+        android:id="@+id/textViewCheckDairyFree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageViewCheckVegetarian"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/dairy_free"
+        android:textColor="@color/darkGray"
+        android:layout_toEndOf="@id/imageViewCheckDiaryFree"
+        />
+
+
+    <ImageView
+        android:id="@+id/imageViewCheckCheap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageViewCheckGlutenFree"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="12dp"
+        android:layout_toEndOf="@id/textViewCheckDairyFree"
+        android:src="@drawable/ic_baseline_check_circle_24" />
+
+    <TextView
+        android:id="@+id/textViewCheckCheap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageViewCheckVegetarian"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/dairy_free"
+        android:textColor="@color/darkGray"
+        android:layout_toEndOf="@id/imageViewCheckCheap"
+        />
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageViewCheckVegan"
+            android:layout_marginTop="16dp"
+            android:clipToPadding="false"
+            >
+            <TextView
+                android:id="@+id/textViewOverViewFragmentDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="description of the recipe"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:textColor="@color/darkGray"
+                android:fontFamily="sans-serif"
+                />
+        </ScrollView>
+
+
+</RelativeLayout>
