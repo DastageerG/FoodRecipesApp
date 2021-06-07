@@ -6,14 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import coil.load
+
 import com.example.foodrecipes.R
 import com.example.foodrecipes.data.model.FoodRecipe
 import com.example.foodrecipes.data.model.RecipeResult
 import com.example.foodrecipes.databinding.FragmentIngredientBinding
 import com.example.foodrecipes.databinding.FragmentOverViewBinding
+import com.example.foodrecipes.utils.Constants
 import com.example.foodrecipes.utils.Utils
 import com.example.foodrecipes.utils.Utils.parseHtmlTags
+import com.squareup.picasso.Picasso
 
 
 class OverviewFragment : Fragment()
@@ -29,7 +31,12 @@ class OverviewFragment : Fragment()
 
         binding.apply ()
         {
-            imageViewOverViewFragmentRecipeImage.load(myBundle?.image)
+
+            Picasso.get()
+                    .load(myBundle?.image)
+                    .placeholder(R.drawable.ic_place_holder_image)
+                    .into(imageViewOverViewFragmentRecipeImage)
+
             textViewOverViewFragmentTitle.text = myBundle?.title
             textViewOverViewFragmentDescription.text = parseHtmlTags(myBundle?.summary.toString())
 

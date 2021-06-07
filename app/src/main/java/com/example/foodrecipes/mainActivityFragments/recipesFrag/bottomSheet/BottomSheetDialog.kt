@@ -19,6 +19,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import java.lang.Exception
 import java.util.*
 
 @ExperimentalCoroutinesApi
@@ -27,7 +28,7 @@ class BottomSheetDialog : BottomSheetDialogFragment()
 
     lateinit var binding :BottomSheetDailogueBinding
     var mealTypeChip = DEFAULT_MEAL_TYPE
-    var mealTypeChipId = 0;
+    var mealTypeChipId = 0
     var dietTypeChip = DEFAULT_DIET_TYPE
     var dietTypeChipId = 0
     lateinit var  recipesViewModel:RecipesViewModel;
@@ -48,6 +49,8 @@ class BottomSheetDialog : BottomSheetDialogFragment()
             mealTypeChip = it.selectedMealType
             dietTypeChip = it.selectedDietType
             Log.d(TAG, "onCreateView: "+mealTypeChip)
+            Log.d(TAG, "onCreateView: meal type ID "+it.selectedMealTypeId)
+            Log.d(TAG, "onCreateView: diet type:"+it.selectedDietTypeId)
             updateChip(it.selectedMealTypeId,binding.mealTypeChipGroup)
             updateChip(it.selectedDietTypeId,binding.dietTypeChipGroup)
         }
@@ -82,11 +85,20 @@ class BottomSheetDialog : BottomSheetDialogFragment()
 
     private fun updateChip(chipId: Int, chipGroup: ChipGroup)
     {
-        if(chipId !=0)
-        {
-            chipGroup.findViewById<Chip>(chipId).isChecked = true
-        } // if closed
+        Log.d(TAG, "updateChip: "+chipId)
+            if(chipId!=0)
+            {
+                try
+                {
+                    chipGroup.findViewById<Chip>(chipId).isChecked = true
+                }catch (e:Exception)
+                {
+                    Log.d(TAG, "updateChip: "+e.message)
+                }
+            }
+
     } // update closed
+
 
 
 } // BottomSheetDialog closed

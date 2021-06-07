@@ -6,11 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
-import coil.request.ImageRequest
+
 import com.example.foodrecipes.R
 import com.example.foodrecipes.data.model.RecipeResult
 import com.example.foodrecipes.databinding.LayoutRecipesItemsRowBinding
+import com.example.foodrecipes.utils.Constants.BASE_IMG_URL
+import com.squareup.picasso.Picasso
 
 class RecipesAdapter : ListAdapter<RecipeResult,RecipesAdapter.ViewHolder>
 (
@@ -56,12 +57,12 @@ class RecipesAdapter : ListAdapter<RecipeResult,RecipesAdapter.ViewHolder>
             textViewLayoutItemsRowTime.text = recipe.readyInMinutes.toString()
 
 
-            imageViewRecipesItemsRow
+
+
+            Picasso.get()
                     .load(recipe.image)
-                    {
-                        crossfade(300)
-                        placeholder(R.drawable.ic_place_holder_image)
-                    }
+                    .placeholder(R.drawable.ic_place_holder_image)
+                    .into(imageViewRecipesItemsRow)
 
 
             when(recipe.vegan)

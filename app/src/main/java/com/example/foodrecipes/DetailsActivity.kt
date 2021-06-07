@@ -11,6 +11,7 @@ import com.example.foodrecipes.databinding.ActivityDetailsBinding
 import com.example.foodrecipes.detailsActivityFragments.ingredientsFrag.IngredientFragment
 import com.example.foodrecipes.detailsActivityFragments.instructionsFrag.InstructionsFragment
 import com.example.foodrecipes.detailsActivityFragments.overviewFrag.OverviewFragment
+import com.google.android.material.snackbar.Snackbar
 
 class DetailsActivity : AppCompatActivity()
 {
@@ -33,6 +34,8 @@ class DetailsActivity : AppCompatActivity()
         titleList.add("Overview")
         titleList.add("Ingredients")
         titleList.add("Instructions")
+
+
 
         val resultBundle = Bundle()
         resultBundle.putParcelable("recipeBundle",args.recipeDetails)
