@@ -18,10 +18,12 @@ import com.example.foodrecipes.viewmodel.RecipesViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.lang.Exception
 import java.util.*
 
+@AndroidEntryPoint
 @ExperimentalCoroutinesApi
 class BottomSheetDialog : BottomSheetDialogFragment()
 {

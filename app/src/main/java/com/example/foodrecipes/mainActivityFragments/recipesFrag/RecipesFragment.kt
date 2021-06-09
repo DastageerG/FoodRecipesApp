@@ -30,7 +30,7 @@ import com.example.foodrecipes.mainActivityFragments.recipesFrag.RecipesFragment
 @AndroidEntryPoint
 class RecipesFragment : Fragment() , androidx.appcompat.widget.SearchView.OnQueryTextListener
 {
-    lateinit var binding : FragmentRecipesBinding
+    var binding : FragmentRecipesBinding? = null
     private val  mainViewModel:MainViewModel by viewModels()
     private val  recipeViewModel:RecipesViewModel by viewModels()
     private val recipesAdapter  =  RecipesAdapter()
@@ -53,7 +53,7 @@ class RecipesFragment : Fragment() , androidx.appcompat.widget.SearchView.OnQuer
         }
 
         networkListener = NetworkListener()
-        lifecycleScope.launch()
+        lifecycleScope.launchWhenStarted()
         {
             networkListener.checkNetworkAvailAbility(requireContext()).collect()
             {status ->
@@ -66,7 +66,7 @@ class RecipesFragment : Fragment() , androidx.appcompat.widget.SearchView.OnQuer
 
 
         // button for categories
-        binding.fabCategories.setOnClickListener()
+        binding?.fabCategories?.setOnClickListener()
         {
             if(recipeViewModel.networkStatus)
             {
@@ -85,14 +85,14 @@ class RecipesFragment : Fragment() , androidx.appcompat.widget.SearchView.OnQuer
         }
 
 
-        return binding.root
+        return binding?.root
     } // onCreate closed
 
 
 
     private fun setupRecyclerView()
     {
-        binding.apply()
+        binding?.apply()
         {
             recyclerViewRecipesFragment.adapter = recipesAdapter
             recyclerViewRecipesFragment.layoutManager = LinearLayoutManager(requireContext())
@@ -199,12 +199,12 @@ class RecipesFragment : Fragment() , androidx.appcompat.widget.SearchView.OnQuer
 
     private  fun showShimmerEffect()
     {
-        binding.recyclerViewRecipesFragment.showShimmer()
+        binding?.recyclerViewRecipesFragment?.showShimmer()
     } // showShimmerEffect closed
 
     private fun hideShimmerEffect()
     {
-        binding.recyclerViewRecipesFragment.hideShimmer()
+        binding?.recyclerViewRecipesFragment?.hideShimmer()
     } // hideShimmer closed
 
 
@@ -234,15 +234,15 @@ class RecipesFragment : Fragment() , androidx.appcompat.widget.SearchView.OnQuer
     //   make them visibile
     fun displayNoInternetViews()
     {
-        binding.imageViewNoInternet.visibility = View.VISIBLE
-        binding.textVieWNoInternetConnection.visibility = View.VISIBLE
+        binding?.imageViewNoInternet?.visibility = View.VISIBLE
+        binding?.textVieWNoInternetConnection?.visibility = View.VISIBLE
     } // displayNoInternetViews
 
     // make them invisible
     fun hideNoInternetViews()
     {
-        binding.imageViewNoInternet.visibility = View.GONE
-        binding.textVieWNoInternetConnection.visibility = View.GONE
+        binding?.imageViewNoInternet?.visibility = View.GONE
+        binding?.textVieWNoInternetConnection?.visibility = View.GONE
     } // hideNoInternetViews
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater)
@@ -273,5 +273,11 @@ class RecipesFragment : Fragment() , androidx.appcompat.widget.SearchView.OnQuer
         return true
     }
 
+
+    override fun onDestroy()
+    {
+        super.onDestroy()
+        binding = null
+    }
 
 } // RecipeFragment class closed

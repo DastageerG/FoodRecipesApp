@@ -4,16 +4,18 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities.*
+import android.util.Log
 import androidx.lifecycle.*
+import com.example.foodrecipes.data.database.favouriteRecipe.FavouriteRecipe
 import com.example.foodrecipes.data.database.offlineCaching.RecipeEntity
+import com.example.foodrecipes.data.model.foodjoke.FoodJoke
 import com.example.foodrecipes.data.model.FoodRecipe
 import com.example.foodrecipes.data.repository.Repository
+import com.example.foodrecipes.utils.Constants.TAG
 import com.example.foodrecipes.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okhttp3.Dispatcher
 import retrofit2.Response
 import java.lang.Exception
 import javax.inject.Inject
@@ -25,6 +27,7 @@ class MainViewModel @Inject constructor(private val repository: Repository,appli
 
    /** ROOM DATABASE */
 
+    /// offline caching
     val readRecipes:LiveData<List<RecipeEntity>> = repository.local.readDatabase().asLiveData()
 
     private fun insertRecipes(recipeEntity: RecipeEntity)
@@ -33,15 +36,38 @@ class MainViewModel @Inject constructor(private val repository: Repository,appli
         {
             repository.local.insertRecipes(recipeEntity)
         }
+    } // insertRecipes closed
+
+    /// favourite recipes scheme
+
+    val readFavouriteRecipes:LiveData<List<FavouriteRecipe>> = repository.local.readFavouriteRecipes().asLiveData()
+
+    fun insertFavouriteRecipes(favouriteRecipe: FavouriteRecipe)
+    {
+        viewModelScope.launch (Dispatchers.IO)
+        {
+            repository.local.insertFavouriteRecipes(favouriteRecipe)
+        }
+    } // insertRecipes closed
+
+     fun deleteFavouriteRecipe(favouriteRecipe: FavouriteRecipe)
+    {
+        viewModelScope.launch (Dispatchers.IO)
+        {
+            repository.local.deleteFavouriteRecipes(favouriteRecipe)
+        }
+    } // insertRecipes closed
+
+    fun deleteAllFavouriteRecipes() = viewModelScope.launch (Dispatchers.IO)
+    {
+        repository.local.deleteAllFavouriteRecipes()
     }
+
+
 
     /** Retrofit*/
     var recipesResponse : MutableLiveData<NetworkResult<FoodRecipe>> = MutableLiveData()
-
     var searchRecipesResponse : MutableLiveData<NetworkResult<FoodRecipe>> = MutableLiveData()
-
-
-
     fun getRecipes(queryMap: HashMap<String,String>) = viewModelScope.launch ()
     {
         getRecipesSafeCall(queryMap)
@@ -73,7 +99,6 @@ class MainViewModel @Inject constructor(private val repository: Repository,appli
             recipesResponse.value = NetworkResult.Error("No Internet Connection.")
         } // else closed
     } // getRecipesSafeCall closed
-
 
 
     fun searchRecipes(searchQueryMap: HashMap<String, String>)
@@ -124,6 +149,57 @@ class MainViewModel @Inject constructor(private val repository: Repository,appli
             else -> NetworkResult.Error(response.message().toString())
         } // return when closed
     }
+
+
+    //// Food Joke method
+
+    val foodJokeResponse:MutableLiveData<NetworkResult<FoodJoke>> = MutableLiveData()
+
+    fun getFoodJoke() = viewModelScope.launch()
+    {
+        getFoodJokeSafeCall();
+    }
+
+    private suspend fun getFoodJokeSafeCall()
+    {
+        foodJokeResponse.value = NetworkResult.Loading()
+        if (hasInternetConnection())
+        {
+            try
+            {
+                val response = repository.remote.getRandomFoodJoke()
+                foodJokeResponse.value = handleFoodJokeResponse(response);
+
+
+            } // try closed
+            catch (e:Exception)
+            {
+                foodJokeResponse.value = NetworkResult.Error("Time Out")
+                //Log.d(TAG, "getFoodJokeSafeCall: "+e.message)
+            } // catch
+
+
+        } // if closed
+        else
+        {
+            foodJokeResponse.value = NetworkResult.Error("No Internet Connection")
+        }
+    } // getFoodJokeSafeCall
+
+
+    private  fun handleFoodJokeResponse(response: Response<FoodJoke>): NetworkResult<FoodJoke>?
+    {
+       return when
+       {
+           response.message().toString().contains("timeout") ->  NetworkResult.Error("Time Out.")
+           response.code() == 402                          -> NetworkResult.Error("APi Key Limited.")
+           response.body()!!.text.isNullOrEmpty() -> NetworkResult.Error("No Food Joke Found.")
+           response.isSuccessful                           -> NetworkResult.Success(response.body()!!)
+           else -> NetworkResult.Error(response.message().toString())
+       } //
+
+
+    } // handleFoodJokeResponse closed
 
 
     // check Network Availability

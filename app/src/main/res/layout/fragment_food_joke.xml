@@ -1,14 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".mainActivityFragments.foodJokeFrag.FoodJokeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardViewFoodFragment"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_centerInParent="true"
+        app:cardCornerRadius="20dp"
+        android:layout_margin="40dp"
+        android:elevation="10dp"
+        app:cardBackgroundColor="#8227FF"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+            <TextView
+                android:id="@+id/textViewFoodJoke"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lorem ipsum"
+                android:layout_centerInParent="true"
+                android:textSize="18sp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:fontFamily="@font/courgette"
+                android:layout_margin="20dp"
+                />
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <ImageView
+        android:id="@+id/imageViewErrorJokeFragment"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_centerInParent="true"
+        android:alpha="0.6"
+        android:src="@drawable/ic_sad_emoji"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/textViewErrorJokeFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageViewErrorJokeFragment"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="8dp"
+        android:text="Error "
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:id="@+id/progressBarJokeFragment"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="80dp"
+        android:visibility="gone" />
+
+
+</RelativeLayout>

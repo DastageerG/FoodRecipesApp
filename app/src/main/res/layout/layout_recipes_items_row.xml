@@ -7,9 +7,12 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="4dp"
     android:layout_marginBottom="4dp"
+    android:id="@+id/constraintLayoutRecipesItemLayout"
+
     >
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardViewRecipesItemLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

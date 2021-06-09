@@ -1,7 +1,5 @@
 package com.example.foodrecipes.adapter
 
-import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -10,13 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 
 import com.example.foodrecipes.R
 import com.example.foodrecipes.data.model.ExtendedIngredient
-import com.example.foodrecipes.data.model.RecipeResult
 import com.example.foodrecipes.databinding.LayoutIngredientsItemsRowBinding
-import com.example.foodrecipes.databinding.LayoutRecipesItemsRowBinding
-import com.example.foodrecipes.utils.Constants
 import com.example.foodrecipes.utils.Constants.BASE_IMG_URL
-import com.example.foodrecipes.utils.Constants.BASE_URL
-import com.example.foodrecipes.utils.Constants.TAG
 import com.squareup.picasso.Picasso
 import java.util.*
 

@@ -5,5 +5,5 @@ import org.jsoup.Jsoup
 object Utils
 {
 
-    fun parseHtmlTags(text: String) : String = Jsoup.parse(text).text()
+    fun parseHtmlTags(text: String?) : String = Jsoup.parse(text.toString()).text()
 }

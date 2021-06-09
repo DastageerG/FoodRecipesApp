@@ -12,7 +12,9 @@
         tools:layout="@layout/fragment_recipes" >
         <action
             android:id="@+id/action_recipesFragment_to_bottomSheetDialog"
-            app:destination="@id/bottomSheetDialog" />
+            app:destination="@id/bottomSheetDialog"
+            app:popUpTo="@id/recipesFragment"
+            app:popUpToInclusive="true" />
         <argument
             android:name="backFromBottomSheet"
             app:argType="boolean"
@@ -26,7 +28,11 @@
         android:id="@+id/favouriteRecipesFragment"
         android:name="com.example.foodrecipes.mainActivityFragments.favouriteRecipesFrag.FavouriteRecipesFragment"
         android:label="@string/fv_recipes"
-        tools:layout="@layout/fragment_favourite_recipes" />
+        tools:layout="@layout/fragment_favourite_recipes" >
+        <action
+            android:id="@+id/action_favouriteRecipesFragment_to_detailsActivity"
+            app:destination="@id/detailsActivity" />
+    </fragment>
     <fragment
         android:id="@+id/foodJokeFragment"
         android:name="com.example.foodrecipes.mainActivityFragments.foodJokeFrag.FoodJokeFragment"

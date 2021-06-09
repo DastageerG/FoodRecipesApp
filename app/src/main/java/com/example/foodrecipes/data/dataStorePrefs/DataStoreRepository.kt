@@ -1,8 +1,9 @@
 package com.example.foodrecipes.data.dataStorePrefs
 
 import android.content.Context
-import androidx.datastore.DataStore
+import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.*
+import androidx.datastore.preferences.core.*
 import com.example.foodrecipes.utils.Constants
 import com.example.foodrecipes.utils.Constants.DATA_STORE_PREFS_NAME
 import com.example.foodrecipes.utils.Constants.DEFAULT_DIET_TYPE
@@ -20,24 +21,24 @@ class DataStoreRepository @Inject constructor(@ApplicationContext private val co
 {
     private object PrefKeys
     {
-        val selectedMealType = preferencesKey<String>(Constants.PREF_KEY_MEAL_TYPE)
-        val selectedMealTypeId = preferencesKey<Int>(Constants.PREF_KEY_MEAL_TYPE_ID)
-        val selectedDietType = preferencesKey<String>(Constants.PREF_KEY_DIET_TYPE)
-        val selectedDietTypeId = preferencesKey<Int>(Constants.PREF_KEY_DIET_TYPE_ID)
-        val backOnline  = preferencesKey<Boolean>(Constants.BACK_ONLINE)
+        val selectedMealType = stringSetPreferencesKey(Constants.PREF_KEY_MEAL_TYPE)
+        val selectedMealTypeId = intPreferencesKey(Constants.PREF_KEY_MEAL_TYPE_ID)
+        val selectedDietType = stringSetPreferencesKey(Constants.PREF_KEY_DIET_TYPE)
+        val selectedDietTypeId = intPreferencesKey(Constants.PREF_KEY_DIET_TYPE_ID)
+        val backOnline  = booleanPreferencesKey(Constants.BACK_ONLINE)
 
     } /// PrefKeys closed
 
-    private val dataStore: DataStore<Preferences> = context.createDataStore(name = DATA_STORE_PREFS_NAME)
-
+   // private val dataStore: DataStore<Preferences> = context.createDataStore(name = DATA_STORE_PREFS_NAME)
+    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name= DATA_STORE_PREFS_NAME)
 
     suspend fun saveMealAndDietTypes(mealType:String, mealId:Int, dietType:String, dietId:Int)
     {
-        dataStore.edit()
+        context.dataStore.edit()
         {prefs->
-            prefs[PrefKeys.selectedMealType] = mealType
+            prefs[PrefKeys.selectedMealType] = setOf(mealType)
             prefs[PrefKeys.selectedMealTypeId] = mealId
-            prefs[PrefKeys.selectedDietType] = dietType
+            prefs[PrefKeys.selectedDietType] = setOf(dietType)
             prefs[PrefKeys.selectedDietTypeId] = dietId
         } // dataStore edit closed
 
@@ -45,13 +46,13 @@ class DataStoreRepository @Inject constructor(@ApplicationContext private val co
 
     suspend fun saveBackOnline(boolean: Boolean)
     {
-        dataStore.edit ()
+        context.dataStore.edit ()
         {
           it[PrefKeys.backOnline] = boolean
         } // edit dataStore closed
     } // savBackOnline closed
 
-    fun getBackOnlineStatus():Flow<Boolean> = dataStore.data
+    fun getBackOnlineStatus():Flow<Boolean> = context.dataStore.data
             .catch()
             {exception ->
                 if(exception is IOException)
@@ -66,7 +67,7 @@ class DataStoreRepository @Inject constructor(@ApplicationContext private val co
             } // map closed
 
 
-    val readMealAndDietType : Flow<MealAndDietType> = dataStore.data
+    val readMealAndDietType : Flow<MealAndDietType> = context.dataStore.data
             .catch()
             { exception->
                 if(exception is IOException)
@@ -82,7 +83,7 @@ class DataStoreRepository @Inject constructor(@ApplicationContext private val co
                 val selectedMealTypeId = prefs[PrefKeys.selectedMealTypeId] ?: 0
                 val selectedDietType = prefs[PrefKeys.selectedDietType] ?: DEFAULT_DIET_TYPE
                 val selectedDietTypeId = prefs[PrefKeys.selectedDietTypeId] ?: 0
-                MealAndDietType(selectedMealType,selectedMealTypeId,selectedDietType,selectedDietTypeId)
+                MealAndDietType(selectedMealType.toString(),selectedMealTypeId, selectedDietType.toString(),selectedDietTypeId)
 
             }
 

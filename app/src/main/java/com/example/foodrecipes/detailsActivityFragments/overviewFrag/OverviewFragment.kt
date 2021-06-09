@@ -8,12 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 
 import com.example.foodrecipes.R
-import com.example.foodrecipes.data.model.FoodRecipe
 import com.example.foodrecipes.data.model.RecipeResult
-import com.example.foodrecipes.databinding.FragmentIngredientBinding
 import com.example.foodrecipes.databinding.FragmentOverViewBinding
-import com.example.foodrecipes.utils.Constants
-import com.example.foodrecipes.utils.Utils
 import com.example.foodrecipes.utils.Utils.parseHtmlTags
 import com.squareup.picasso.Picasso
 
@@ -27,7 +23,7 @@ class OverviewFragment : Fragment()
         binding = FragmentOverViewBinding.inflate(inflater,container,false)
 
         val args = arguments
-        val myBundle:RecipeResult? = args?.getParcelable("recipeBundle")
+        val myBundle: RecipeResult? = args?.getParcelable("recipeBundle")
 
         binding.apply ()
         {

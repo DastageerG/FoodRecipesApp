@@ -7,9 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebViewClient
-import com.example.foodrecipes.R
 import com.example.foodrecipes.data.model.RecipeResult
-import com.example.foodrecipes.databinding.FragmentIngredientBinding
 import com.example.foodrecipes.databinding.FragmentInstructionsBinding
 import com.example.foodrecipes.utils.Constants.TAG
 

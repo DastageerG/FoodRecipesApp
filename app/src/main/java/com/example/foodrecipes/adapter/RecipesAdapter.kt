@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.foodrecipes.R
 import com.example.foodrecipes.data.model.RecipeResult
 import com.example.foodrecipes.databinding.LayoutRecipesItemsRowBinding
-import com.example.foodrecipes.utils.Constants.BASE_IMG_URL
+import com.example.foodrecipes.utils.Utils
 import com.squareup.picasso.Picasso
 
 class RecipesAdapter : ListAdapter<RecipeResult,RecipesAdapter.ViewHolder>
@@ -51,19 +51,15 @@ class RecipesAdapter : ListAdapter<RecipeResult,RecipesAdapter.ViewHolder>
 
 
             textViewLayoutItemsRowName.text = recipe.title
-            textViewLayoutItemsRowDescription.text = recipe.summary
+            textViewLayoutItemsRowDescription.text = Utils.parseHtmlTags(recipe.summary.toString())
 
             textViewLayoutItemsRowLikes.text = recipe.aggregateLikes.toString()
             textViewLayoutItemsRowTime.text = recipe.readyInMinutes.toString()
-
-
-
 
             Picasso.get()
                     .load(recipe.image)
                     .placeholder(R.drawable.ic_place_holder_image)
                     .into(imageViewRecipesItemsRow)
-
 
             when(recipe.vegan)
             {
@@ -71,8 +67,8 @@ class RecipesAdapter : ListAdapter<RecipeResult,RecipesAdapter.ViewHolder>
                 {
                     textViewLayoutItemsRowVegan.setTextColor(Color.GREEN)
                     imageViewRecipesItemsRowVegan.setColorFilter(Color.GREEN)
-                }
-            }
+                } // true
+            } // when
 
 
 
@@ -83,7 +79,7 @@ class RecipesAdapter : ListAdapter<RecipeResult,RecipesAdapter.ViewHolder>
         {
 
             onItemClickListener?.let { it(recipe) }
-        }
+        } //
 
     } // onBindViewHolder closed
 

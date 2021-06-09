@@ -1,9 +1,9 @@
 package com.example.foodrecipes.data.model
 
 import android.os.Parcelable
+import com.example.foodrecipes.data.model.ExtendedIngredient
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
-import java.io.Serializable
 
 @Parcelize
 data class RecipeResult(
