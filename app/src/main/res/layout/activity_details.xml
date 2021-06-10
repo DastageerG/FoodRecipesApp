@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DetailsActivity"
+    android:background="@color/backgroundColor"
     android:id="@+id/relativeLayout"
     >
     <com.google.android.material.appbar.AppBarLayout
@@ -12,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:background="@color/actionBarBackgroundColor"
         >
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolBarDetailsActivity"

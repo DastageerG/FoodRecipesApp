@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/backgroundColor"
     tools:context=".detailsActivityFragments.overviewFrag.OverviewFragment">
 
     <ImageView
@@ -36,11 +37,12 @@
         android:id="@+id/textViewOverViewFragmentLikes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@id/imageViewOverViewFragmentRecipeImage"
         android:layout_alignBottom="@id/imageViewOverViewFragmentRecipeImage"
-        android:layout_marginEnd="85dp"
+        android:layout_toStartOf="@id/imageViewOverViewFragmentRecipeLikes"
         android:layout_marginBottom="10dp"
-        android:text="2345"
+        android:layout_marginEnd="-16dp"
+        android:text="0"
+        android:gravity="center"
         android:textColor="@color/white" />
 
     <ImageView
@@ -59,11 +61,12 @@
         android:id="@+id/textViewOverViewFragmentTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@id/imageViewOverViewFragmentRecipeImage"
         android:layout_alignBottom="@id/imageViewOverViewFragmentRecipeImage"
-        android:layout_marginEnd="30dp"
+        android:layout_toStartOf="@id/imageViewOverViewFragmentRecipeTime"
+        android:layout_marginEnd="-16dp"
         android:layout_marginBottom="10dp"
-        android:text="2345"
+        android:text="0"
+        android:gravity="center"
         android:textColor="@color/white" />
 
     <TextView
@@ -73,7 +76,7 @@
         android:text="Title"
         android:layout_below="@id/imageViewOverViewFragmentRecipeImage"
         android:textSize="28sp"
-        android:textColor="@color/black"
+        android:textColor="@color/titleColor"
         android:textStyle="bold"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
@@ -88,6 +91,7 @@
         android:layout_below="@id/textViewOverViewFragmentTitle"
         android:layout_marginStart="24dp"
         android:layout_marginTop="4dp"
+        app:tint="@color/filterColor"
         android:src="@drawable/ic_baseline_check_circle_24" />
 
     <TextView
@@ -99,7 +103,7 @@
         android:layout_marginTop="8dp"
         android:layout_toEndOf="@id/imageViewCheckVegetarian"
         android:text="@string/vegetarian"
-        android:textColor="@color/darkGray" />
+        android:textColor="@color/filterColor" />
 
     <ImageView
         android:id="@+id/imageViewCheckGlutenFree"
@@ -110,6 +114,7 @@
         android:layout_marginTop="4dp"
         android:layout_marginStart="16dp"
         android:layout_toEndOf="@id/textViewCheckVegetarian"
+        app:tint="@color/filterColor"
         />
 
     <TextView
@@ -121,7 +126,7 @@
         android:layout_marginTop="8dp"
         android:layout_toEndOf="@id/imageViewCheckGlutenFree"
         android:text="@string/gluten_free"
-        android:textColor="@color/darkGray" />
+        android:textColor="@color/filterColor" />
 
 
     <ImageView
@@ -133,6 +138,7 @@
         android:layout_marginTop="4dp"
         android:layout_marginStart="16dp"
         android:layout_toEndOf="@id/textViewCheckGlutenFree"
+        app:tint="@color/filterColor"
         />
 
     <TextView
@@ -144,7 +150,7 @@
         android:layout_marginTop="8dp"
         android:layout_toEndOf="@id/imageViewCheckHealthy"
         android:text="@string/healthy"
-        android:textColor="@color/darkGray" />
+        android:textColor="@color/filterColor" />
 
 
 
@@ -156,6 +162,7 @@
         android:layout_below="@id/imageViewCheckVegetarian"
         android:layout_marginTop="12dp"
         android:layout_marginStart="24dp"
+        app:tint="@color/filterColor"
         />
 
     <TextView
@@ -165,10 +172,9 @@
         android:layout_below="@id/imageViewCheckVegetarian"
         android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
-        android:text="@string/vegan"
-        android:textColor="@color/darkGray"
         android:layout_toEndOf="@id/imageViewCheckVegan"
-        />
+        android:text="@string/vegan"
+        android:textColor="@color/filterColor" />
 
 
     <ImageView
@@ -179,7 +185,9 @@
         android:layout_marginStart="44dp"
         android:layout_marginTop="12dp"
         android:layout_toEndOf="@id/textViewCheckVegan"
-        android:src="@drawable/ic_baseline_check_circle_24" />
+        android:src="@drawable/ic_baseline_check_circle_24"
+        app:tint="@color/filterColor"
+        />
 
     <TextView
         android:id="@+id/textViewCheckDairyFree"
@@ -188,10 +196,10 @@
         android:layout_below="@id/imageViewCheckVegetarian"
         android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
-        android:text="@string/dairy_free"
-        android:textColor="@color/darkGray"
         android:layout_toEndOf="@id/imageViewCheckDiaryFree"
-        />
+        android:text="@string/dairy_free"
+        android:textColor="@color/filterColor"
+        app:tint="@color/filterColor" />
 
 
     <ImageView
@@ -202,7 +210,9 @@
         android:layout_marginStart="25dp"
         android:layout_marginTop="12dp"
         android:layout_toEndOf="@id/textViewCheckDairyFree"
-        android:src="@drawable/ic_baseline_check_circle_24" />
+        android:src="@drawable/ic_baseline_check_circle_24"
+        app:tint="@color/filterColor"
+        />
 
     <TextView
         android:id="@+id/textViewCheckCheap"
@@ -211,9 +221,10 @@
         android:layout_below="@id/imageViewCheckVegetarian"
         android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
-        android:text="@string/dairy_free"
-        android:textColor="@color/darkGray"
         android:layout_toEndOf="@id/imageViewCheckCheap"
+        android:text="@string/dairy_free"
+        android:textColor="@color/filterColor"
+
         />
 
 
@@ -234,7 +245,7 @@
                 android:text="description of the recipe"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
-                android:textColor="@color/darkGray"
+                android:textColor="@color/descriptionColor"
                 android:fontFamily="sans-serif"
                 />
         </ScrollView>

@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:text="Name"
                 android:fontFamily="@font/courgette"
-                android:textColor="@color/darker"
+                android:textColor="@color/titleColor"
                 android:textStyle="bold"
                 android:textSize="20sp"
                 android:layout_toEndOf="@id/imageViewIngredientsItemsRowIngredientImg"
@@ -50,47 +50,47 @@
             android:id="@+id/textViewIngredientsRowLayoutAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="100"
-            android:layout_toEndOf="@id/imageViewIngredientsItemsRowIngredientImg"
             android:layout_below="@id/textViewIngredientsRowLayoutName"
             android:layout_marginStart="12dp"
             android:layout_marginBottom="8dp"
-            />
+            android:layout_toEndOf="@id/imageViewIngredientsItemsRowIngredientImg"
+            android:text="100"
+            android:textColor="@color/descriptionColor" />
 
         <TextView
             android:id="@+id/textViewIngredientsRowLayoutUnit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Grams"
-            android:layout_toEndOf="@id/textViewIngredientsRowLayoutAmount"
             android:layout_below="@id/textViewIngredientsRowLayoutName"
             android:layout_marginStart="8dp"
             android:layout_marginBottom="8dp"
-            />
+            android:layout_toEndOf="@id/textViewIngredientsRowLayoutAmount"
+            android:text="Grams"
+            android:textColor="@color/descriptionColor" />
 
         <TextView
             android:id="@+id/textViewIngredientsRowLayoutConsistency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Consistency"
-            android:layout_toEndOf="@id/imageViewIngredientsItemsRowIngredientImg"
             android:layout_below="@id/textViewIngredientsRowLayoutAmount"
             android:layout_marginStart="12dp"
             android:layout_marginBottom="8dp"
-            />
+            android:layout_toEndOf="@id/imageViewIngredientsItemsRowIngredientImg"
+            android:text="Consistency"
+            android:textColor="@color/descriptionColor" />
 
 
         <TextView
             android:id="@+id/textViewIngredientsRowLayoutOriginal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Original"
-            android:layout_toEndOf="@id/imageViewIngredientsItemsRowIngredientImg"
             android:layout_below="@id/textViewIngredientsRowLayoutConsistency"
             android:layout_marginStart="12dp"
             android:layout_marginBottom="8dp"
+            android:layout_toEndOf="@id/imageViewIngredientsItemsRowIngredientImg"
+            android:text="Original"
 
-            />
+            android:textColor="@color/descriptionColor" />
 
 
     </RelativeLayout>

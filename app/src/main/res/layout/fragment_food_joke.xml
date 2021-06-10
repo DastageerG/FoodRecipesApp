@@ -4,8 +4,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/backgroundColor"
     tools:context=".mainActivityFragments.foodJokeFrag.FoodJokeFragment">
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/titleColor"
+        android:text="@string/food_joke"
+        android:textAlignment="center"
+
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="100dp"
+        android:textSize="28sp"
+        android:fontFamily="@font/courgette"
+
+        />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardViewFoodFragment"
